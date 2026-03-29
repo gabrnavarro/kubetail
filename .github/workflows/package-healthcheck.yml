@@ -12,6 +12,9 @@ concurrency:
   group: package-healthcheck
   cancel-in-progress: true
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   linux:
     if: github.repository == 'kubetail-org/kubetail'
@@ -172,7 +175,7 @@ jobs:
       TRIPLET: apk_alpine-edge_${{ matrix.arch }}
     steps:
       - name: Setup Alpine
-        uses: jirutka/setup-alpine@v1
+        uses: jirutka/setup-alpine@v1.4.1
         with:
           arch: ${{ matrix.arch }}
           branch: edge
@@ -302,7 +305,7 @@ jobs:
       TRIPLET: apt_${{ matrix.series }}_${{ matrix.arch }}
     steps:
       - name: Test on ${{ matrix.arch }}
-        uses: uraimo/run-on-arch-action@v3
+        uses: uraimo/run-on-arch-action@v3.0.1
         with:
           arch: ${{ matrix.arch }}
           distro: ${{ matrix.distro }}
@@ -833,7 +836,7 @@ jobs:
     if: always() && github.repository == 'kubetail-org/kubetail'
     steps:
       - name: Download all artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: /tmp/artifacts
           pattern: version-*
