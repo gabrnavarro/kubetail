@@ -567,9 +567,11 @@ jobs:
         shell: bash
         run: |
           set -euxo pipefail
+          IMAGE="${{ matrix.image }}"
+          OS_VERSION="${IMAGE##*:}"
           zypper -n refresh
-          rpm --import https://download.opensuse.org/repositories/home:/kubetail/15.6/repodata/repomd.xml.key
-          zypper -n addrepo "https://download.opensuse.org/repositories/home:/kubetail/15.6/" kubetail
+          rpm --import "https://download.opensuse.org/repositories/home:/kubetail/${OS_VERSION}/repodata/repomd.xml.key"
+          zypper -n addrepo "https://download.opensuse.org/repositories/home:/kubetail/${OS_VERSION}/" kubetail
           zypper -n refresh
           zypper install -y kubetail-cli
 
